@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as Tone from "tone";
 import { Signal } from "tone";
 import AmpSimple from "./modules/amps/AmpSimple";
@@ -25,30 +25,19 @@ const Synth = () => {
   const [amp] = useState(new Tone.Multiply());
   const [filter] = useState(new Tone.Filter(22000, "lowpass", -12));
 
-  useEffect(() => {
-    // console.log(filter.Q.value);
-    filter.Q.value = 0;
-    // console.log(filter.Q.value);
-    // forceUpdate();
-    oscillator.chain(envelope, amp, filter, Tone.Destination);
-    gain.connect(amp.factor);
-    oscillator.start();
-    return () => {
-      oscillator.stop();
-      oscillator.dispose();
-      envelope.dispose();
-      amp.dispose();
-      filter.dispose();
-    };
-  }, []);
+  oscillator.chain(envelope, amp, filter, Tone.Destination);
+  gain.connect(amp.factor);
 
-  const triggerRelease = () => envelope.triggerRelease();
+  filter.Q.value = 0;
   const triggerAttack = () => {
-    envelope.triggerRelease();
+    oscillator.start();
+    console.log("Trigger Attack");
+    envelope.triggerAttack();
+  };
 
-    setTimeout(() => {
-      envelope.triggerAttack();
-    }, 100);
+  const triggerRelease = () => {
+    console.log("Trigger Release");
+    envelope.triggerRelease();
   };
 
   return (
