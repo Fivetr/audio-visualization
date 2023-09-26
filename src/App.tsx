@@ -1,12 +1,6 @@
 import "./App.css";
+import Synth from "./components/Synth";
 
-function App() {
-  return (
-    <>
-      <h1 className="text-4xl">Hello</h1>
-      <div></div>
-    </>
-  );
-}
+const App = () => <Synth/>
 
 export default App;
