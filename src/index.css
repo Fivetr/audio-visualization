@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .my-container {
+    @apply w-[160px] h-[400px] p-2 m-5 rounded-lg shadow-lg shadow-[#b574f6bb] bg-gradient-to-bl from-[#6A0DAD] to-[#d23164] hover:bg-gradient-to-tl;
+  }
+  .on-off-button {
+    @apply rounded-full text-base py-1 px-3 focus:ring-2 focus:outline-none focus:ring-red-300 font-semibold hover:scale-125 duration-500 hover:px-2;
+  }
+  .freq-button {
+    @apply items-center justify-center h-10 text-sm text-indigo-100 duration-700 rounded-md hover:scale-110 bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br  shadow-md shadow-red-500/50;
+  }
+}

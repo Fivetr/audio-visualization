@@ -1,35 +1,25 @@
-import { ToneOscillatorType } from "tone"
-import Button from "../../interfaces/Button"
+import { ToneOscillatorType } from "tone";
+import Button from "../../interfaces/Button";
 
-interface OscSimpleProps{
-    setWaveform: (newWaveform: ToneOscillatorType) => void;
+interface OscSimpleProps {
+  setWaveform: (newWaveform: ToneOscillatorType) => void;
 }
 
-const OscSimple = ({setWaveform}: OscSimpleProps) => {
-    const style: React.CSSProperties = {
-        borderColor: 'black', 
-        borderWidth:'2px', 
-        width: '150px', 
-        height: '400px', 
-        margin:'5px', 
-        padding: '5px',
-    }
+const OscSimple = ({ setWaveform }: OscSimpleProps) => {
+  return (
+    <div className="my-container">
+      <div>osc</div>
 
+      <select
+        onChange={(e) => setWaveform(e.target.value as ToneOscillatorType)}
+      >
+        <option value="sine">sine</option>
+        <option value="triangle">triangle</option>
+        <option value="square">square</option>
+        <option value="sawtooth">sawtooth</option>
+      </select>
+    </div>
+  );
+};
 
-    return (
-        <div style={style}>
-            <div>
-                osc
-            </div>
-
-            <select onChange={e => setWaveform(e.target.value as ToneOscillatorType)}>
-                <option value="sine">sine</option>
-                <option value="triangle">triangle</option>
-                <option value="square">square</option>
-                <option value="sawtooth">sawtooth</option>
-            </select>
-        </div>
-    )
-}
-
-export default OscSimple
+export default OscSimple;

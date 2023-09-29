@@ -1,21 +1,13 @@
 import { ReactNode } from "react";
 
-const Rack = ({children}: {children?: ReactNode}) => {
-    const style: React.CSSProperties = {
-        borderColor: 'black', 
-        borderWidth:'2px', 
-        width: '1000px', 
-        height: '600px', 
-        margin:'5px', 
-        padding: '5px',
-        display: 'flex'
-    }
- 
-    return (
-        <div style={style}>
-            {children}
-        </div>
-    )
-}
+const Rack = ({ children }: { children?: ReactNode }) => {
+  return (
+    <div className="border-gray-100 overflow-hidden border-b w-full h-[600px] flex justify-center bg-gradient-to-tl from-[#5a0260] via-[#948f97] to-[#5a0260]">
+      <div className="w-[1440px] flex justify-evenly items-center p-5">
+        {children}
+      </div>
+    </div>
+  );
+};
 
 export default Rack;
