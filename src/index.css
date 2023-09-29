@@ -4,7 +4,7 @@
 
 @layer components {
   .my-container {
-    @apply w-[160px] h-[400px] p-2 m-5 rounded-lg shadow-lg shadow-[#b574f6bb] bg-gradient-to-bl from-[#6A0DAD] to-[#d23164] hover:bg-gradient-to-tl;
+    @apply w-[160px] h-[400px] p-2 m-5 rounded-lg shadow-lg shadow-[#b574f6bb] bg-gradient-to-bl from-[#6A0DAD] to-[#d23164] hover:bg-gradient-to-tl hover:scale-110 duration-700;
   }
   .on-off-button {
     @apply rounded-full text-base py-1 px-3 focus:ring-2 focus:outline-none focus:ring-red-300 font-semibold hover:scale-125 duration-500 hover:px-2;
