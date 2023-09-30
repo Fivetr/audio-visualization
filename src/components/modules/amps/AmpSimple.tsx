@@ -7,8 +7,8 @@ interface AmpSimpleProps {
 
 const AmpSimple = ({ setGain, gain }: AmpSimpleProps) => {
   return (
-    <div className="my-container">
-      amp
+    <div className="my-container h-[7.5rem] flex flex-col">
+      <span className="title">AMP</span>
       <Knob
         label={"Gain"}
         min={0}

@@ -16,8 +16,8 @@ const EnvelopeASDR = ({ adsr, setAdsr }: EnvelopeADSRProps) => {
   const knobConfig = { min: 0, max: 2, steps: 50 };
 
   return (
-    <div className="my-container">
-      amplitude envelope
+    <div className="my-container h-[300px]">
+      <span className="title">AMPLITUDE ENVELOPE</span>
       <Knob
         label={"Attack"}
         value={adsr.attack}

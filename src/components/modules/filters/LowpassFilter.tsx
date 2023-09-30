@@ -14,10 +14,10 @@ const LowpassFilter = ({
   setResonance,
 }: FilterProps) => {
   return (
-    <div className="my-container">
-      Lowpass filter
+    <div className="my-container h-[14rem]">
+      <span className="title">LOWPASS FILTER</span>
       <Knob
-        label="freq"
+        label="Freq"
         min={0}
         max={22000}
         steps={5000}
@@ -27,7 +27,7 @@ const LowpassFilter = ({
         setValue={setCutoff}
       />
       <Knob
-        label="resonance"
+        label="Resonance"
         min={0}
         max={60}
         steps={50}

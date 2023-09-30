@@ -52,45 +52,49 @@ const Synth = () => {
             forceUpdate();
           }}
         />
-        <OscSimple
-          setWaveform={(newWaveform: Tone.ToneOscillatorType) =>
-            (oscillator.type = newWaveform)
-          }
-        />
-        <EnvelopeASDR
-          adsr={{
-            attack: envelope.attack as number,
-            decay: envelope.decay as number,
-            sustain: envelope.sustain as number,
-            release: envelope.release as number,
-          }}
-          setAdsr={(newAdsr) => {
-            envelope.attack = newAdsr.attack;
-            envelope.decay = newAdsr.decay;
-            envelope.sustain = newAdsr.sustain;
-            envelope.release = newAdsr.release;
-            forceUpdate();
-          }}
-        />
-        <LowpassFilter
-          cutoffFrequency={filter.frequency.value as number}
-          setCutoff={(freq) => {
-            filter.frequency.value = freq;
-            forceUpdate();
-          }}
-          resonance={filter.Q.value}
-          setResonance={(q) => {
-            filter.Q.value = q;
-            forceUpdate();
-          }}
-        />
-        <AmpSimple
-          setGain={(newGain: number) => {
-            gain.value = newGain;
-            forceUpdate();
-          }}
-          gain={gain.value}
-        />
+        <div className="flex flex-col gap-3">
+          <OscSimple
+            setWaveform={(newWaveform: Tone.ToneOscillatorType) =>
+              (oscillator.type = newWaveform)
+            }
+          />
+          <EnvelopeASDR
+            adsr={{
+              attack: envelope.attack as number,
+              decay: envelope.decay as number,
+              sustain: envelope.sustain as number,
+              release: envelope.release as number,
+            }}
+            setAdsr={(newAdsr) => {
+              envelope.attack = newAdsr.attack;
+              envelope.decay = newAdsr.decay;
+              envelope.sustain = newAdsr.sustain;
+              envelope.release = newAdsr.release;
+              forceUpdate();
+            }}
+          />
+        </div>
+        <div className="flex flex-col gap-3">
+          <LowpassFilter
+            cutoffFrequency={filter.frequency.value as number}
+            setCutoff={(freq) => {
+              filter.frequency.value = freq;
+              forceUpdate();
+            }}
+            resonance={filter.Q.value}
+            setResonance={(q) => {
+              filter.Q.value = q;
+              forceUpdate();
+            }}
+          />
+          <AmpSimple
+            setGain={(newGain: number) => {
+              gain.value = newGain;
+              forceUpdate();
+            }}
+            gain={gain.value}
+          />
+        </div>
       </Rack>
     </>
   );

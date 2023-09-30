@@ -15,7 +15,7 @@ const TriggerSwitch = ({
 }: TriggerSwitchProps) => {
   return (
     <div className="my-container flex flex-col gap-2 items-center">
-      <div className="text-center font-extrabold text-lg">TRIGGER</div>
+      <div className="title">TRIGGER</div>
 
       <div className="flex justify-center gap-2 mt-3">
         <Button style="on-off-button" onClick={onHandler} label="ON" />
