@@ -25,3 +25,19 @@
     @apply text-center font-extrabold bg-gradient-to-r from-[#0ad3f2f8] via-[#09b41f] to-[#0a9efaf8] inline-block text-transparent bg-clip-text;
   }
 }
+
+@keyframes bounce-left-right {
+  0%,
+  100% {
+    transform: translateX(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateX(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.animate-bounce-left-right {
+  animation: bounce-left-right 1s infinite;
+}

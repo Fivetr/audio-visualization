@@ -7,6 +7,7 @@ import EnvelopeASDR from "./modules/envelope_generators/EnvelopeADSR";
 import LowpassFilter from "./modules/filters/LowpassFilter";
 import OscSimple from "./modules/oscillators/OscSimple";
 import Rack from "./Rack";
+import Sidebar from "./Sidebar";
 
 const Synth = () => {
   const [ignored, setIgnored] = useState(0);
@@ -95,6 +96,7 @@ const Synth = () => {
             gain={gain.value}
           />
         </div>
+        <Sidebar />
       </Rack>
     </>
   );
