@@ -38,13 +38,13 @@ function Sidebar({ Modules, setModules }: SidebarProps) {
                       : "bg-[#f1eef1]"
                   }`}
                 onClick={() =>
-                  setModules({
-                    ...Modules,
+                  setModules((prev) => ({
+                    ...prev,
                     [module]: {
-                      ...Modules[module],
-                      isOpen: !Modules[module].isOpen,
+                      ...prev[module],
+                      isOpen: !prev[module].isOpen,
                     },
-                  })
+                  }))
                 }
               >
                 {module}
