@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import * as Tone from "tone";
 import { Signal } from "tone";
 import AmpSimple from "./modules/amps/AmpSimple";
@@ -8,11 +8,28 @@ import LowpassFilter from "./modules/filters/LowpassFilter";
 import OscSimple from "./modules/oscillators/OscSimple";
 import Rack from "./Rack";
 import Sidebar from "./Sidebar";
+import { modules } from "../../types/index";
+import DeleteButton from "./interfaces/DeleteButton";
+
+export const moduleLists: string[] = [
+  "Triggers",
+  "OCS",
+  "Amplitude Envelope",
+  "Lowpass Filter",
+  "AMP",
+];
 
 const Synth = () => {
+  const memoizedValue = useMemo(() => {
+    const res: modules = {};
+    moduleLists.forEach((item) => (res[item] = { isOpen: false, title: item }));
+    return res;
+  }, [moduleLists]);
+
+  const [Modules, setModules] = useState(memoizedValue);
+
   const [ignored, setIgnored] = useState(0);
   const forceUpdate = () => setIgnored(ignored + 1);
-
   const [gain] = useState(new Signal(0.5));
   const [oscillator] = useState(new Tone.Oscillator("C4", "sine"));
   const [envelope] = useState(
@@ -44,59 +61,87 @@ const Synth = () => {
   return (
     <>
       <Rack>
-        <TriggerSwitch
-          onHandler={triggerAttack}
-          offHandler={triggerRelease}
-          frequency={oscillator.frequency.value as number}
-          setFrequency={(freq) => {
-            oscillator.frequency.value = freq;
-            forceUpdate();
-          }}
-        />
+        {Modules["Triggers"].isOpen ? (
+          <section className="relative">
+            <TriggerSwitch
+              onHandler={triggerAttack}
+              offHandler={triggerRelease}
+              frequency={oscillator.frequency.value as number}
+              setFrequency={(freq) => {
+                oscillator.frequency.value = freq;
+                forceUpdate();
+              }}
+            />
+            <DeleteButton setModules={setModules} module="Triggers" />
+          </section>
+        ) : null}
+        <section className="flex flex-col gap-3">
+          {Modules["OCS"].isOpen ? (
+            <div className="relative">
+              <OscSimple
+                setWaveform={(newWaveform: Tone.ToneOscillatorType) =>
+                  (oscillator.type = newWaveform)
+                }
+              />
+              <DeleteButton setModules={setModules} module="OCS" />
+            </div>
+          ) : null}
+          {Modules["Amplitude Envelope"].isOpen ? (
+            <section className="relative">
+              <EnvelopeASDR
+                adsr={{
+                  attack: envelope.attack as number,
+                  decay: envelope.decay as number,
+                  sustain: envelope.sustain as number,
+                  release: envelope.release as number,
+                }}
+                setAdsr={(newAdsr) => {
+                  envelope.attack = newAdsr.attack;
+                  envelope.decay = newAdsr.decay;
+                  envelope.sustain = newAdsr.sustain;
+                  envelope.release = newAdsr.release;
+                  forceUpdate();
+                }}
+              />
+              <DeleteButton
+                setModules={setModules}
+                module="Amplitude Envelope"
+              />
+            </section>
+          ) : null}
+        </section>
         <div className="flex flex-col gap-3">
-          <OscSimple
-            setWaveform={(newWaveform: Tone.ToneOscillatorType) =>
-              (oscillator.type = newWaveform)
-            }
-          />
-          <EnvelopeASDR
-            adsr={{
-              attack: envelope.attack as number,
-              decay: envelope.decay as number,
-              sustain: envelope.sustain as number,
-              release: envelope.release as number,
-            }}
-            setAdsr={(newAdsr) => {
-              envelope.attack = newAdsr.attack;
-              envelope.decay = newAdsr.decay;
-              envelope.sustain = newAdsr.sustain;
-              envelope.release = newAdsr.release;
-              forceUpdate();
-            }}
-          />
+          {Modules["Lowpass Filter"].isOpen ? (
+            <section className="relative">
+              <LowpassFilter
+                cutoffFrequency={filter.frequency.value as number}
+                setCutoff={(freq) => {
+                  filter.frequency.value = freq;
+                  forceUpdate();
+                }}
+                resonance={filter.Q.value}
+                setResonance={(q) => {
+                  filter.Q.value = q;
+                  forceUpdate();
+                }}
+              />
+              <DeleteButton setModules={setModules} module="Lowpass Filter" />
+            </section>
+          ) : null}
+          {Modules["AMP"].isOpen ? (
+            <section className="relative">
+              <AmpSimple
+                setGain={(newGain: number) => {
+                  gain.value = newGain;
+                  forceUpdate();
+                }}
+                gain={gain.value}
+              />
+              <DeleteButton setModules={setModules} module="AMP" />
+            </section>
+          ) : null}
         </div>
-        <div className="flex flex-col gap-3">
-          <LowpassFilter
-            cutoffFrequency={filter.frequency.value as number}
-            setCutoff={(freq) => {
-              filter.frequency.value = freq;
-              forceUpdate();
-            }}
-            resonance={filter.Q.value}
-            setResonance={(q) => {
-              filter.Q.value = q;
-              forceUpdate();
-            }}
-          />
-          <AmpSimple
-            setGain={(newGain: number) => {
-              gain.value = newGain;
-              forceUpdate();
-            }}
-            gain={gain.value}
-          />
-        </div>
-        <Sidebar />
+        <Sidebar Modules={Modules} setModules={setModules} />
       </Rack>
     </>
   );
