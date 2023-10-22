@@ -30,7 +30,7 @@ const Synth = () => {
 
   const [ignored, setIgnored] = useState(0);
   const forceUpdate = () => setIgnored(ignored + 1);
-  const [gain] = useState(new Signal(0.5));
+  const [gain] = useState(new Signal(0.3));
   const [oscillator] = useState(new Tone.Oscillator("C4", "sine"));
   const [envelope] = useState(
     new Tone.AmplitudeEnvelope({
@@ -45,7 +45,7 @@ const Synth = () => {
 
   oscillator.chain(envelope, amp, filter, Tone.Destination);
   gain.connect(amp.factor);
-  
+
   const triggerAttack = () => {
     oscillator.start();
     console.log("Trigger Attack");
