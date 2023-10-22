@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import * as Tone from "tone";
 import { Signal } from "tone";
 import AmpSimple from "./modules/amps/AmpSimple";
@@ -10,6 +10,8 @@ import Sidebar from "./Sidebar";
 import { modules } from "../../types/index";
 import DeleteButton from "./interfaces/DeleteButton";
 import Keyboard from "./modules/controlers/Keyboard";
+import WaveVisualizer from "./modules/oscillators/WaveVisualizer";
+import { FaUpRightFromSquare } from "react-icons/fa6";
 
 export const moduleLists: string[] = [
   "Triggers",
@@ -27,7 +29,7 @@ const Synth = () => {
   }, [moduleLists]);
 
   const [Modules, setModules] = useState(memoizedValue);
-
+  const [waveform, setWaveform] = useState<Uint8Array>(new Uint8Array(256));
   const [ignored, setIgnored] = useState(0);
   const forceUpdate = () => setIgnored(ignored + 1);
   const [gain] = useState(new Signal(0.3));
@@ -42,14 +44,29 @@ const Synth = () => {
   );
   const [amp] = useState(new Tone.Multiply());
   const [filter] = useState(new Tone.Filter(22000, "lowpass", -12));
+  const analyser = useRef<Tone.Analyser | null>(null);
 
-  oscillator.chain(envelope, amp, filter, Tone.Destination);
+  analyser.current = new Tone.Analyser("waveform", 256);
+  oscillator.chain(envelope, amp, filter, analyser.current, Tone.Destination);
   gain.connect(amp.factor);
 
   const triggerAttack = () => {
     oscillator.start();
     console.log("Trigger Attack");
     envelope.triggerAttack();
+    if (analyser.current !== null) {
+      const newWaveformFloat32 = analyser.current.getValue();
+      console.log(newWaveformFloat32);
+      const newWaveform = new Uint8Array(newWaveformFloat32.length);
+      for (let i = 0; i < newWaveformFloat32.length; i++) {
+        newWaveform[i] = Math.min(
+          255,
+          Math.max(0, Math.round((newWaveformFloat32[i] as number) * 255))
+        );
+      }
+      console.log(newWaveform);
+      setWaveform(newWaveform);
+    }
   };
 
   const triggerRelease = () => {
@@ -141,6 +158,7 @@ const Synth = () => {
         </div>
         <Sidebar Modules={Modules} setModules={setModules} />
       </Rack>
+      <WaveVisualizer waveform={waveform} />
     </>
   );
 };
