@@ -59,10 +59,11 @@ const Synth = () => {
       console.log(newWaveformFloat32);
       const newWaveform = new Uint8Array(newWaveformFloat32.length);
       for (let i = 0; i < newWaveformFloat32.length; i++) {
-        newWaveform[i] = Math.min(
-          255,
-          Math.max(0, Math.round((newWaveformFloat32[i] as number) * 255))
+        const sample = Math.min(
+          1,
+          Math.max(-1, newWaveformFloat32[i] as number)
         );
+        newWaveform[i] = Math.round((sample + 1) * 127);
       }
       console.log(newWaveform);
       setWaveform(newWaveform);
