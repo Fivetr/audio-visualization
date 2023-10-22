@@ -2,7 +2,6 @@ import { useState, useMemo } from "react";
 import * as Tone from "tone";
 import { Signal } from "tone";
 import AmpSimple from "./modules/amps/AmpSimple";
-import TriggerSwitch from "./modules/controlers/TriggerSwitch";
 import EnvelopeASDR from "./modules/envelope_generators/EnvelopeADSR";
 import LowpassFilter from "./modules/filters/LowpassFilter";
 import OscSimple from "./modules/oscillators/OscSimple";
@@ -10,6 +9,7 @@ import Rack from "./Rack";
 import Sidebar from "./Sidebar";
 import { modules } from "../../types/index";
 import DeleteButton from "./interfaces/DeleteButton";
+import Keyboard from "./modules/controlers/Keyboard";
 
 export const moduleLists: string[] = [
   "Triggers",
@@ -63,10 +63,9 @@ const Synth = () => {
       <Rack>
         {Modules["Triggers"].isOpen ? (
           <section className="relative">
-            <TriggerSwitch
+            <Keyboard
               onHandler={triggerAttack}
               offHandler={triggerRelease}
-              frequency={oscillator.frequency.value as number}
               setFrequency={(freq) => {
                 oscillator.frequency.value = freq;
                 forceUpdate();

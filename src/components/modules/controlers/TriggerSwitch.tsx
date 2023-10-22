@@ -1,8 +1,8 @@
 import Button from "../../interfaces/Button";
 
 interface TriggerSwitchProps {
-  onHandler: () => any;
-  offHandler: () => any;
+  onHandler: () => void;
+  offHandler: () => void;
   frequency: number;
   setFrequency: (freq: number) => void;
 }
