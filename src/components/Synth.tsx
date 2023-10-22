@@ -11,7 +11,6 @@ import { modules } from "../../types/index";
 import DeleteButton from "./interfaces/DeleteButton";
 import Keyboard from "./modules/controlers/Keyboard";
 import WaveVisualizer from "./modules/oscillators/WaveVisualizer";
-import { FaUpRightFromSquare } from "react-icons/fa6";
 
 export const moduleLists: string[] = [
   "Triggers",
@@ -29,11 +28,11 @@ const Synth = () => {
   }, [moduleLists]);
 
   const [Modules, setModules] = useState(memoizedValue);
-  const [waveform, setWaveform] = useState<Uint8Array>(new Uint8Array(256));
+  const [waveform, setWaveform] = useState<Uint8Array>(new Uint8Array(2048));
   const [ignored, setIgnored] = useState(0);
   const forceUpdate = () => setIgnored(ignored + 1);
   const [gain] = useState(new Signal(0.3));
-  const [oscillator] = useState(new Tone.Oscillator("C4", "sine"));
+  const [oscillator] = useState(new Tone.Oscillator("C4", "sawtooth"));
   const [envelope] = useState(
     new Tone.AmplitudeEnvelope({
       attack: 1,

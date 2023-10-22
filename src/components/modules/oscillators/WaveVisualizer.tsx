@@ -16,11 +16,10 @@ function WaveVisualizer({ waveform }: WaveVisualizer) {
     context.lineWidth = 2;
     context.beginPath();
 
-    const sliceWidth = (canvas.width * 1.0) / waveform.length;
+    const sliceWidth = (canvas.width) / waveform.length;
     let x = 0;
-    console.log(canvas.height);
     for (const value of waveform) {
-      const y = (1 - value / 256) * canvas.height;
+      const y = (1 - value / 255) * canvas.height;
       context.lineTo(x, y);
       x += sliceWidth;
     }
