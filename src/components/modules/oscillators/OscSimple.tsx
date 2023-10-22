@@ -16,7 +16,7 @@ const OscSimple = ({ setWaveform }: OscSimpleProps) => {
           <option value="sine">sine</option>
           <option value="triangle">triangle</option>
           <option value="square">square</option>
-          <option value="sawtooth">sawtooth</option>
+          <option selected value="sawtooth">sawtooth</option>
         </select>
       </div>
     </div>
