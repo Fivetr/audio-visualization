@@ -45,8 +45,7 @@ const Synth = () => {
 
   oscillator.chain(envelope, amp, filter, Tone.Destination);
   gain.connect(amp.factor);
-
-  filter.Q.value = 0;
+  
   const triggerAttack = () => {
     oscillator.start();
     console.log("Trigger Attack");
