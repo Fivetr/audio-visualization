@@ -30,8 +30,8 @@ function Oscilloscope({ waveform }: OscilloscopeProps) {
   return(
     <div className="my-container h-[15rem] w-[45rem] flex flex-col">
     <span className="title">OSCILLOSCOPE</span>
-    <div style={{backgroundColor:'white', width: 'auto', height: 'auto'}}>
-      <canvas ref={canvasRef} width={600} height={180} />
+    <div style={{backgroundColor:'white', width: 700, height: 600}}>
+      <canvas ref={canvasRef} width={700} height={180} />
     </div>
   </div>
   )
