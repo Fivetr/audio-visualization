@@ -1,9 +1,9 @@
 import { useRef, useEffect } from "react";
 
-type WaveVisualizer = {
+interface OscilloscopeProps{
   waveform: Uint8Array;
-};
-function WaveVisualizer({ waveform }: WaveVisualizer) {
+}
+function Oscilloscope({ waveform }: OscilloscopeProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -27,7 +27,17 @@ function WaveVisualizer({ waveform }: WaveVisualizer) {
     context.stroke();
   }, [waveform]);
 
-  return <canvas ref={canvasRef} width={800} height={200} />;
+  return(
+    <div className="my-container h-[15rem] w-[45rem] flex flex-col">
+    <span className="title">OSCILLOSCOPE</span>
+    <div style={{backgroundColor:'white', width: 'auto', height: 'auto'}}>
+      <canvas ref={canvasRef} width={600} height={180} />;
+    </div>
+  </div>
+  )
+
+
+  return 
 }
 
-export default WaveVisualizer;
+export default Oscilloscope;

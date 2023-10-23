@@ -10,7 +10,7 @@ import Sidebar from "./Sidebar";
 import { modules } from "../../types/index";
 import DeleteButton from "./interfaces/DeleteButton";
 import Keyboard from "./modules/controlers/Keyboard";
-import WaveVisualizer from "./modules/oscillators/WaveVisualizer";
+import Oscilloscope from "./modules/visualizers/Oscilloscope";
 
 export const moduleLists: string[] = [
   "Triggers",
@@ -18,6 +18,7 @@ export const moduleLists: string[] = [
   "Amplitude Envelope",
   "Lowpass Filter",
   "AMP",
+  "Visualizers"
 ];
 
 const Synth = () => {
@@ -156,9 +157,14 @@ const Synth = () => {
             </section>
           ) : null}
         </div>
+        {Modules["Visualizers"].isOpen ? (
+          <section className="relative">
+            <Oscilloscope waveform={waveform}/>
+            <DeleteButton setModules={setModules} module="Visualizers" />
+          </section>
+        ) : null}
         <Sidebar Modules={Modules} setModules={setModules} />
       </Rack>
-      <WaveVisualizer waveform={waveform} />
     </>
   );
 };
