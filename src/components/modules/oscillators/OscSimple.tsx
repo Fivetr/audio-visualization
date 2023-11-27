@@ -6,7 +6,7 @@ interface OscSimpleProps {
 
 const OscSimple = ({ setWaveform }: OscSimpleProps) => {
   return (
-    <div className="my-container h-12 flex items-center ">
+    <div className="my-container h-20 flex items-center ">
       <span className="title mr-4">OCS</span>
       <div>
         <select
@@ -16,7 +16,9 @@ const OscSimple = ({ setWaveform }: OscSimpleProps) => {
           <option value="sine">sine</option>
           <option value="triangle">triangle</option>
           <option value="square">square</option>
-          <option selected value="sawtooth">sawtooth</option>
+          <option selected value="sawtooth">
+            sawtooth
+          </option>
         </select>
       </div>
     </div>

@@ -15,7 +15,7 @@ const LowpassFilter = ({
 }: FilterProps) => {
   return (
     <div className="my-container h-[14rem]">
-      <span className="title">LOWPASS FILTER</span>
+      <span className="title mt-3">LOWPASS FILTER</span>
       <Knob
         label="Freq"
         min={0}

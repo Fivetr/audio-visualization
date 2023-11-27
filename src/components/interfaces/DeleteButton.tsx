@@ -15,7 +15,7 @@ function DeleteButton({ setModules, module }: DeleteButtonProps) {
   };
   return (
     <div
-      className="absolute -top-1.5 -right-4 text-2xl rounded-full hover:animate-pulse text-red-400 cursor-pointer"
+      className="absolute top-0 right-1 text-2xl rounded-full hover:animate-pulse text-red-400 cursor-pointer"
       onClick={handleClick}
     >
       <FaDeleteLeft />

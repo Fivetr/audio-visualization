@@ -11,6 +11,7 @@ import { modules } from "../../types/index";
 import DeleteButton from "./interfaces/DeleteButton";
 import Keyboard from "./modules/controlers/Keyboard";
 import Oscilloscope from "./modules/visualizers/Oscilloscope";
+import Oscilloscope_fft from "./modules/visualizers/Oscilloscope_fft";
 
 export const moduleLists: string[] = [
   "Triggers",
@@ -18,7 +19,8 @@ export const moduleLists: string[] = [
   "Amplitude Envelope",
   "Lowpass Filter",
   "AMP",
-  "Visualizers"
+  "Visualizers",
+  "Visualizers_fft",
 ];
 
 const Synth = () => {
@@ -30,6 +32,9 @@ const Synth = () => {
 
   const [Modules, setModules] = useState(memoizedValue);
   const [waveform, setWaveform] = useState<Uint8Array>(new Uint8Array(2048));
+  const [histographForm, sethistographForm] = useState<Uint8Array>(
+    new Uint8Array(2048)
+  );
   const [ignored, setIgnored] = useState(0);
   const forceUpdate = () => setIgnored(ignored + 1);
   const [gain] = useState(new Signal(0.3));
@@ -45,18 +50,25 @@ const Synth = () => {
   const [amp] = useState(new Tone.Multiply());
   const [filter] = useState(new Tone.Filter(22000, "lowpass", -12));
   const analyser = useRef<Tone.Analyser | null>(null);
+  const fft_analyser = useRef<Tone.Analyser | null>(null);
 
   analyser.current = new Tone.Analyser("waveform", 256);
-  oscillator.chain(envelope, amp, filter, analyser.current, Tone.Destination);
+  fft_analyser.current = new Tone.Analyser("fft", 2048);
+  oscillator.chain(
+    envelope,
+    amp,
+    filter,
+    analyser.current,
+    fft_analyser.current,
+    Tone.Destination
+  );
   gain.connect(amp.factor);
 
   const triggerAttack = () => {
     oscillator.start();
-    console.log("Trigger Attack");
     envelope.triggerAttack();
     if (analyser.current !== null) {
       const newWaveformFloat32 = analyser.current.getValue();
-      console.log(newWaveformFloat32);
       const newWaveform = new Uint8Array(newWaveformFloat32.length);
       for (let i = 0; i < newWaveformFloat32.length; i++) {
         const sample = Math.min(
@@ -65,8 +77,16 @@ const Synth = () => {
         );
         newWaveform[i] = Math.round((sample + 1) * 127);
       }
-      console.log(newWaveform);
       setWaveform(newWaveform);
+    }
+    if (fft_analyser.current !== null) {
+      const newfftFloat32 = fft_analyser.current.getValue();
+      const newfft = new Uint8Array(newfftFloat32.length);
+      for (let i = 0; i < newfftFloat32.length; i++) {
+        const normalizedValue = ((newfftFloat32[i] as number) + 100) / 100;
+        newfft[i] = Math.round(normalizedValue * 256);
+      }
+      sethistographForm(newfft);
     }
   };
 
@@ -157,12 +177,20 @@ const Synth = () => {
             </section>
           ) : null}
         </div>
-        {Modules["Visualizers"].isOpen ? (
-          <section className="relative">
-            <Oscilloscope waveform={waveform}/>
-            <DeleteButton setModules={setModules} module="Visualizers" />
-          </section>
-        ) : null}
+        <div className="flex flex-col gap-3">
+          {Modules["Visualizers"].isOpen ? (
+            <section className="relative">
+              <Oscilloscope waveform={waveform} />
+              <DeleteButton setModules={setModules} module="Visualizers" />
+            </section>
+          ) : null}
+          {Modules["Visualizers_fft"].isOpen ? (
+            <section className="relative">
+              <Oscilloscope_fft histogram={histographForm} />
+              <DeleteButton setModules={setModules} module="Visualizers_fft" />
+            </section>
+          ) : null}
+        </div>
         <Sidebar Modules={Modules} setModules={setModules} />
       </Rack>
     </>

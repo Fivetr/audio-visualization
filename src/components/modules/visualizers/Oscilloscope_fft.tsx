@@ -1,9 +1,10 @@
 import { useRef, useEffect } from "react";
 interface OscilloscopeProps {
-  waveform: Uint8Array;
+  histogram: Uint8Array;
 }
-function Oscilloscope({ waveform }: OscilloscopeProps) {
+function Oscilloscope_fft({ histogram }: OscilloscopeProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -11,24 +12,23 @@ function Oscilloscope({ waveform }: OscilloscopeProps) {
     if (!context) return;
 
     context.clearRect(0, 0, canvas.width, canvas.height);
-    context.lineWidth = 2;
-    context.strokeStyle = "blue";
+    context.lineWidth = 5;
     context.beginPath();
 
-    const sliceWidth = canvas.width / waveform.length;
+    const barWidth = canvas.width / histogram.length;
     let x = 0;
-    for (const value of waveform) {
-      const y = (1 - value / 256) * canvas.height;
-      context.lineTo(x, y);
-      x += sliceWidth;
+    for (const value of histogram) {
+      const barHeight = (value / 256) * canvas.height;
+      context.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+      x += barWidth;
     }
-
+    context.strokeStyle = "blue";
     context.stroke();
-  }, [waveform, canvasRef]);
+  }, [histogram, canvasRef]);
 
   return (
     <div className="my-container h-[15rem] w-[20rem] flex flex-col">
-      <span className="title">OSCILLOSCOPE</span>
+      <span className="title">OSCILLOSCOPE FFT</span>
       <div style={{ backgroundColor: "white", width: 300, height: 600 }}>
         <canvas ref={canvasRef} width={300} height={180} />
       </div>
@@ -36,4 +36,4 @@ function Oscilloscope({ waveform }: OscilloscopeProps) {
   );
 }
 
-export default Oscilloscope;
+export default Oscilloscope_fft;
