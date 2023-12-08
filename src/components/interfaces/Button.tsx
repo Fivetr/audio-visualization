@@ -1,3 +1,4 @@
+// ALL: Michael Zayne Lumpkin
 interface ButtonProps {
   label: string;
   style?: string;

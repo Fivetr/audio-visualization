@@ -1,3 +1,4 @@
+// ALL: Michael Zayne Lumpkin
 import Knob from "../../interfaces/Knob";
 
 interface ADSR {
@@ -16,6 +17,8 @@ const EnvelopeASDR = ({ adsr, setAdsr }: EnvelopeADSRProps) => {
   const knobConfig = { min: 0, max: 2, steps: 50 };
 
   return (
+    // HTML elements: Michael Zayne Lumpkin
+    // Style: Desong Li
     <div className="my-container h-[300px]">
       <span className="title">AMPLITUDE ENVELOPE</span>
       <Knob

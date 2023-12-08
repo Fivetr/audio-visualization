@@ -13,6 +13,7 @@ import Keyboard from "./modules/controlers/Keyboard";
 import Oscilloscope from "./modules/visualizers/Oscilloscope";
 import Oscilloscope_fft from "./modules/visualizers/Oscilloscope_fft";
 
+// Desong Li
 export const moduleLists: string[] = [
   "Triggers",
   "OCS",
@@ -24,6 +25,7 @@ export const moduleLists: string[] = [
 ];
 
 const Synth = () => {
+  // Desong Li
   const memoizedValue = useMemo(() => {
     const res: modules = {};
     moduleLists.forEach((item) => (res[item] = { isOpen: false, title: item }));
@@ -35,6 +37,8 @@ const Synth = () => {
   const [histographForm, sethistographForm] = useState<Uint8Array>(
     new Uint8Array(2048)
   );
+
+  // Michael Zayne Lumpkin
   const [ignored, setIgnored] = useState(0);
   const forceUpdate = () => setIgnored(ignored + 1);
   const [gain] = useState(new Signal(0.3));
@@ -49,11 +53,15 @@ const Synth = () => {
   );
   const [amp] = useState(new Tone.Multiply());
   const [filter] = useState(new Tone.Filter(22000, "lowpass", -12));
+
+  // Desong Li
   const analyser = useRef<Tone.Analyser | null>(null);
   const fft_analyser = useRef<Tone.Analyser | null>(null);
 
   analyser.current = new Tone.Analyser("waveform", 256);
   fft_analyser.current = new Tone.Analyser("fft", 2048);
+
+  // Michael Zayne Lumpkin
   oscillator.chain(
     envelope,
     amp,
@@ -64,6 +72,7 @@ const Synth = () => {
   );
   gain.connect(amp.factor);
 
+  // Desong Li
   const triggerAttack = () => {
     oscillator.start();
     envelope.triggerAttack();
@@ -90,17 +99,21 @@ const Synth = () => {
     }
   };
 
+  // Desong Li
   const triggerRelease = () => {
     console.log("Trigger Release");
     envelope.triggerRelease();
   };
 
   return (
+    // HTML elements, JS and styles: Desong Li
+    // Modules: Michael Zayne Lumpkin
     <>
       <Rack>
+        {/* Desong Li */}
         {Modules["Triggers"].isOpen ? (
           <section className="relative">
-            <Keyboard
+            <Keyboard // Michael Zayne Lumpkin
               onHandler={triggerAttack}
               offHandler={triggerRelease}
               setFrequency={(freq) => {
@@ -111,10 +124,11 @@ const Synth = () => {
             <DeleteButton setModules={setModules} module="Triggers" />
           </section>
         ) : null}
+        {/* Desong Li */}
         <section className="flex flex-col gap-3">
           {Modules["OCS"].isOpen ? (
             <div className="relative">
-              <OscSimple
+              <OscSimple // Michael Zayne Lumpkin
                 setWaveform={(newWaveform: Tone.ToneOscillatorType) =>
                   (oscillator.type = newWaveform)
                 }
@@ -124,7 +138,7 @@ const Synth = () => {
           ) : null}
           {Modules["Amplitude Envelope"].isOpen ? (
             <section className="relative">
-              <EnvelopeASDR
+              <EnvelopeASDR // Michael Zayne Lumpkin
                 adsr={{
                   attack: envelope.attack as number,
                   decay: envelope.decay as number,
@@ -146,10 +160,11 @@ const Synth = () => {
             </section>
           ) : null}
         </section>
+        {/* Desong Li */}
         <div className="flex flex-col gap-3">
           {Modules["Lowpass Filter"].isOpen ? (
             <section className="relative">
-              <LowpassFilter
+              <LowpassFilter // Michael Zayne Lumpkin
                 cutoffFrequency={filter.frequency.value as number}
                 setCutoff={(freq) => {
                   filter.frequency.value = freq;
@@ -166,7 +181,7 @@ const Synth = () => {
           ) : null}
           {Modules["AMP"].isOpen ? (
             <section className="relative">
-              <AmpSimple
+              <AmpSimple // Michael Zayne Lumpkin
                 setGain={(newGain: number) => {
                   gain.value = newGain;
                   forceUpdate();
@@ -177,6 +192,7 @@ const Synth = () => {
             </section>
           ) : null}
         </div>
+        {/* Desong Li */}
         <div className="flex flex-col gap-3">
           {Modules["Visualizers"].isOpen ? (
             <section className="relative">

@@ -1,3 +1,4 @@
+//ALL: Desong Li
 import { useRef, useEffect } from "react";
 interface OscilloscopeProps {
   histogram: Uint8Array;

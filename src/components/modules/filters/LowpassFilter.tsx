@@ -1,5 +1,4 @@
 import Knob from "../../interfaces/Knob";
-
 interface FilterProps {
   cutoffFrequency: number;
   setCutoff: (freq: number) => void;
@@ -14,6 +13,8 @@ const LowpassFilter = ({
   setResonance,
 }: FilterProps) => {
   return (
+    // HTML elements: Michael Zayne Lumpkin
+    // Style: Desong Li
     <div className="my-container h-[14rem]">
       <span className="title mt-3">LOWPASS FILTER</span>
       <Knob

@@ -14,9 +14,10 @@ const TriggerSwitch = ({
   setFrequency,
 }: TriggerSwitchProps) => {
   return (
+    // HTML elements: Michael Zayne Lumpkin
+    // Styles: Desong Li
     <div className="my-container flex flex-col gap-2 items-center">
       <div className="title">TRIGGER</div>
-
       <div className="flex justify-center gap-2 mt-3">
         <Button style="on-off-button" onClick={onHandler} label="ON" />
         <Button style="on-off-button" onClick={offHandler} label="OFF" />

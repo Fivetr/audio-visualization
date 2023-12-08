@@ -6,6 +6,8 @@ interface OscSimpleProps {
 
 const OscSimple = ({ setWaveform }: OscSimpleProps) => {
   return (
+    // HTML elements: Michael Zayne Lumpkin
+    // Style: Desong Li
     <div className="my-container h-20 flex items-center ">
       <span className="title mr-4">OCS</span>
       <div>

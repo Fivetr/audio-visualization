@@ -1,3 +1,4 @@
+// ALL: Michael Zayne Lumpkin
 import "./App.css";
 import Synth from "./components/Synth";
 

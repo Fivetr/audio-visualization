@@ -7,6 +7,8 @@ interface AmpSimpleProps {
 
 const AmpSimple = ({ setGain, gain }: AmpSimpleProps) => {
   return (
+    // HTML elements: Michael Zayne Lumpkin
+    // Style: Desong Li
     <div className="my-container h-[7.5rem] flex flex-col">
       <span className="title">AMP</span>
       <Knob

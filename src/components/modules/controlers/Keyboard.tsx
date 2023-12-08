@@ -1,3 +1,4 @@
+// ALL: Michael Zayne Lumpkin
 import { useState } from "react";
 import Button from "../../interfaces/Button";
 import { Note, noteProperties } from "../../../logic/Note";
