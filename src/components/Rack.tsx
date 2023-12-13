@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 
 const Rack = ({ children }: { children?: ReactNode }) => {
+  // Container
   return (
     // styles: Desong Li
     // HTML elements: Michael Zayne Lumpkin

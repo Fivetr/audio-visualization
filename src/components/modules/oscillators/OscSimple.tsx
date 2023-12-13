@@ -5,6 +5,7 @@ interface OscSimpleProps {
 }
 
 const OscSimple = ({ setWaveform }: OscSimpleProps) => {
+  // render the OSC components
   return (
     // HTML elements: Michael Zayne Lumpkin
     // Style: Desong Li

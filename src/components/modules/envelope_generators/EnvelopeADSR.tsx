@@ -14,6 +14,7 @@ interface EnvelopeADSRProps {
 }
 
 const EnvelopeASDR = ({ adsr, setAdsr }: EnvelopeADSRProps) => {
+  // amlitude evelope; Attack, Descay, Sustian, Release
   const knobConfig = { min: 0, max: 2, steps: 50 };
 
   return (
@@ -21,6 +22,7 @@ const EnvelopeASDR = ({ adsr, setAdsr }: EnvelopeADSRProps) => {
     // Style: Desong Li
     <div className="my-container h-[300px]">
       <span className="title">AMPLITUDE ENVELOPE</span>
+      {/* adjust the level */}
       <Knob
         label={"Attack"}
         value={adsr.attack}

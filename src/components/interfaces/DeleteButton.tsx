@@ -14,6 +14,7 @@ function DeleteButton({ setModules, module }: DeleteButtonProps) {
       [module]: { ...prev[module], isOpen: false },
     }));
   };
+  // Reusable delete button closing the synthesizer component
   return (
     <div
       className="absolute top-0 right-1 text-2xl rounded-full hover:animate-pulse text-red-400 cursor-pointer"

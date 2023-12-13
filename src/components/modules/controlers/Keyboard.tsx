@@ -44,6 +44,7 @@ interface KeyboardProps {
 }
 
 const Keyboard = ({ onHandler, offHandler, setFrequency }: KeyboardProps) => {
+  // Nodes that triggers the oscillator
   const [numOctaves, setNumOctaves] = useState(2);
   const [startingOctave, setStartingOctave] = useState(3);
 

@@ -5,8 +5,9 @@ interface OscilloscopeProps {
 }
 function Oscilloscope_fft({ histogram }: OscilloscopeProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
+  // re render when the input values (histogram) changed.
   useEffect(() => {
+    // create a new canvas for drawing the oscilloscope.
     const canvas = canvasRef.current;
     if (!canvas) return;
     const context = canvas.getContext("2d");
@@ -16,6 +17,7 @@ function Oscilloscope_fft({ histogram }: OscilloscopeProps) {
     context.lineWidth = 5;
     context.beginPath();
 
+    // fill the canvas
     const barWidth = canvas.width / histogram.length;
     let x = 0;
     for (const value of histogram) {

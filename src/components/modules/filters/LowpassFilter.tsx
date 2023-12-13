@@ -12,6 +12,7 @@ const LowpassFilter = ({
   setCutoff,
   setResonance,
 }: FilterProps) => {
+  // render the filter component
   return (
     // HTML elements: Michael Zayne Lumpkin
     // Style: Desong Li

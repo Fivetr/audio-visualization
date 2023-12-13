@@ -10,6 +10,7 @@ type SidebarProps = {
 };
 
 function Sidebar({ Modules, setModules }: SidebarProps) {
+  // handle open and close effects
   const [Open, setOpen] = useState(false);
 
   return (
@@ -20,6 +21,7 @@ function Sidebar({ Modules, setModules }: SidebarProps) {
     >
       <div className="flex gap-2 items-start">
         <div className="border border-purple-500  rounded-lg w-[200px]">
+          {/* render the corresponding component when clicked */}
           {moduleLists.map((module, idx) => {
             return (
               <div
@@ -53,6 +55,7 @@ function Sidebar({ Modules, setModules }: SidebarProps) {
             );
           })}
         </div>
+        {/* open and close button*/}
         <button
           className="text-4xl animate-bounce-left-right"
           onClick={() => setOpen(!Open)}

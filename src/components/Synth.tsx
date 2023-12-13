@@ -14,6 +14,7 @@ import Oscilloscope from "./modules/visualizers/Oscilloscope";
 import Oscilloscope_fft from "./modules/visualizers/Oscilloscope_fft";
 
 // Desong Li
+// Side bar lists
 export const moduleLists: string[] = [
   "Triggers",
   "OCS",
@@ -26,19 +27,23 @@ export const moduleLists: string[] = [
 
 const Synth = () => {
   // Desong Li
+  // avoid unnecessary operations; invoke only when moduleList changes
   const memoizedValue = useMemo(() => {
     const res: modules = {};
     moduleLists.forEach((item) => (res[item] = { isOpen: false, title: item }));
     return res;
   }, [moduleLists]);
-
   const [Modules, setModules] = useState(memoizedValue);
+
+  // Desong Li
+  // Store input values for oscilloscope module
   const [waveform, setWaveform] = useState<Uint8Array>(new Uint8Array(2048));
   const [histographForm, sethistographForm] = useState<Uint8Array>(
     new Uint8Array(2048)
   );
 
   // Michael Zayne Lumpkin
+  // synth components
   const [ignored, setIgnored] = useState(0);
   const forceUpdate = () => setIgnored(ignored + 1);
   const [gain] = useState(new Signal(0.3));
@@ -55,9 +60,9 @@ const Synth = () => {
   const [filter] = useState(new Tone.Filter(22000, "lowpass", -12));
 
   // Desong Li
+  // inputs for waveform and fft oscilloscope
   const analyser = useRef<Tone.Analyser | null>(null);
   const fft_analyser = useRef<Tone.Analyser | null>(null);
-
   analyser.current = new Tone.Analyser("waveform", 256);
   fft_analyser.current = new Tone.Analyser("fft", 2048);
 
@@ -74,12 +79,15 @@ const Synth = () => {
 
   // Desong Li
   const triggerAttack = () => {
+    // start the oscillator when a node is clicked
     oscillator.start();
     envelope.triggerAttack();
+    // capature input for visualizing waveform oscilloscope
     if (analyser.current !== null) {
       const newWaveformFloat32 = analyser.current.getValue();
       const newWaveform = new Uint8Array(newWaveformFloat32.length);
       for (let i = 0; i < newWaveformFloat32.length; i++) {
+        // [-1, 1]
         const sample = Math.min(
           1,
           Math.max(-1, newWaveformFloat32[i] as number)
@@ -88,6 +96,7 @@ const Synth = () => {
       }
       setWaveform(newWaveform);
     }
+    // capature input for visualizing the fft oscilloscope
     if (fft_analyser.current !== null) {
       const newfftFloat32 = fft_analyser.current.getValue();
       const newfft = new Uint8Array(newfftFloat32.length);
@@ -111,6 +120,7 @@ const Synth = () => {
     <>
       <Rack>
         {/* Desong Li */}
+        {/* render the Keyboard component when clicked */}
         {Modules["Triggers"].isOpen ? (
           <section className="relative">
             <Keyboard // Michael Zayne Lumpkin
@@ -125,6 +135,7 @@ const Synth = () => {
           </section>
         ) : null}
         {/* Desong Li */}
+        {/* render the OscSimple component when clicked */}
         <section className="flex flex-col gap-3">
           {Modules["OCS"].isOpen ? (
             <div className="relative">
@@ -136,6 +147,7 @@ const Synth = () => {
               <DeleteButton setModules={setModules} module="OCS" />
             </div>
           ) : null}
+          {/* render the EnvelopeASDR component when clicked */}
           {Modules["Amplitude Envelope"].isOpen ? (
             <section className="relative">
               <EnvelopeASDR // Michael Zayne Lumpkin
@@ -161,6 +173,7 @@ const Synth = () => {
           ) : null}
         </section>
         {/* Desong Li */}
+        {/* render the LowpassFilter component when clicked */}
         <div className="flex flex-col gap-3">
           {Modules["Lowpass Filter"].isOpen ? (
             <section className="relative">
@@ -179,6 +192,7 @@ const Synth = () => {
               <DeleteButton setModules={setModules} module="Lowpass Filter" />
             </section>
           ) : null}
+          {/* render the AmpSimple component when clicked */}
           {Modules["AMP"].isOpen ? (
             <section className="relative">
               <AmpSimple // Michael Zayne Lumpkin
@@ -194,12 +208,14 @@ const Synth = () => {
         </div>
         {/* Desong Li */}
         <div className="flex flex-col gap-3">
+          {/* render the waveform  oscilloscope component when clicked */}
           {Modules["Visualizers"].isOpen ? (
             <section className="relative">
               <Oscilloscope waveform={waveform} />
               <DeleteButton setModules={setModules} module="Visualizers" />
             </section>
           ) : null}
+          {/* render the fft oscilloscope component when clicked */}
           {Modules["Visualizers_fft"].isOpen ? (
             <section className="relative">
               <Oscilloscope_fft histogram={histographForm} />
@@ -207,6 +223,7 @@ const Synth = () => {
             </section>
           ) : null}
         </div>
+        {/* render the side bar component */}
         <Sidebar Modules={Modules} setModules={setModules} />
       </Rack>
     </>

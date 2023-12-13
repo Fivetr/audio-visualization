@@ -21,6 +21,7 @@ const Knob = ({
   value,
   setValue,
 }: KnobProps) => {
+  // Reusable slider for adjusting the input of the synthesizer component
   return (
     <div className="mt-2">
       <span className="">{label}</span> : {value.toFixed(digitPrecision) + unit}

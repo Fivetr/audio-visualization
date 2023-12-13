@@ -5,7 +5,9 @@ interface OscilloscopeProps {
 }
 function Oscilloscope({ waveform }: OscilloscopeProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  // re render when the input values (waveform) changed.
   useEffect(() => {
+    // create a new canvas for drawing the oscilloscope.
     const canvas = canvasRef.current;
     if (!canvas) return;
     const context = canvas.getContext("2d");
@@ -13,9 +15,9 @@ function Oscilloscope({ waveform }: OscilloscopeProps) {
 
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.lineWidth = 2;
-    context.strokeStyle = "blue";
     context.beginPath();
 
+    // fill the canvas
     const sliceWidth = canvas.width / waveform.length;
     let x = 0;
     for (const value of waveform) {
@@ -23,7 +25,6 @@ function Oscilloscope({ waveform }: OscilloscopeProps) {
       context.lineTo(x, y);
       x += sliceWidth;
     }
-
     context.stroke();
   }, [waveform, canvasRef]);
 

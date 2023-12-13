@@ -13,6 +13,8 @@ const TriggerSwitch = ({
   frequency,
   setFrequency,
 }: TriggerSwitchProps) => {
+  // trigger switch that starts the oscillator
+  // abandon
   return (
     // HTML elements: Michael Zayne Lumpkin
     // Styles: Desong Li
